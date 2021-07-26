@@ -1,5 +1,12 @@
+const { Request, Response, NextFunction } = require('express')
 const { Post } = require('../models');
 
+/**
+ * Create a new post
+ * @param {Request} req 
+ * @param {Response} res 
+ * @param {NextFunction} next 
+ */
 exports.create = async (req, res, next) => {
   const { title, content } = req.body;
 
@@ -31,7 +38,13 @@ exports.create = async (req, res, next) => {
   }
 }
 
-exports.findAll = async (req, res) => {
+/**
+ * Find all posts
+ * @param {Request} req 
+ * @param {Response} res 
+ * @param {NextFunction} next 
+ */
+exports.findAll = async (req, res, next) => {
   try {
     const posts = await Post.find();
 
@@ -42,7 +55,13 @@ exports.findAll = async (req, res) => {
   }
 }
 
-exports.findOne = async (req, res) => {
+/**
+ * Find a single post
+ * @param {Request} req 
+ * @param {Response} res 
+ * @param {NextFunction} next 
+ */
+exports.findOne = async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -50,7 +69,7 @@ exports.findOne = async (req, res) => {
 
     if (!post) {
       res.status(404);
-      return next(new Error(`No post found to update with ID: ${id}`));
+      return next(new Error(`No post found with ID: ${id}`));
     }
 
     return res.json(post);
@@ -60,6 +79,12 @@ exports.findOne = async (req, res) => {
   }
 }
 
+/**
+ * Update a post
+ * @param {Request} req 
+ * @param {Response} res 
+ * @param {NextFunction} next 
+ */
 exports.update = async (req, res, next) => {
   const { id } = req.params;
   const { title, content } = req.body;
@@ -86,6 +111,12 @@ exports.update = async (req, res, next) => {
   }
 }
 
+/**
+ * Delete a post
+ * @param {Request} req 
+ * @param {Response} res 
+ * @param {NextFunction} next 
+ */
 exports.delete = async (req, res, next) => {
   const { id } = req.params;
 
